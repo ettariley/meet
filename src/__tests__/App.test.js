@@ -53,10 +53,13 @@ describe('<App /> integration', () => {
     const suggestions = CitySearchWrapper.state('suggestions');
     const selectedIndex = Math.floor(Math.random() * (suggestions.length));
     const selectedCity = suggestions[selectedIndex];
+    let eventCount = AppWrapper.state('eventCount');
     await CitySearchWrapper.instance().handleItemClicked(selectedCity);
     const allEvents = await getEvents();
     const eventsToShow = allEvents.filter(event => event.location === selectedCity);
-    expect(AppWrapper.state('events')).toEqual(eventsToShow);
+    eventCount = Math.min(eventsToShow.length, eventCount);
+    const eventsByCount = eventsToShow.slice(0, eventCount);
+    expect(AppWrapper.state('events')).toEqual(eventsByCount);
     AppWrapper.unmount();
   });
 
@@ -65,8 +68,19 @@ describe('<App /> integration', () => {
     const suggestionItems = AppWrapper.find(CitySearch).find('.suggestions li');
     await suggestionItems.at(suggestionItems.length - 1).simulate('click');
     const allEvents = await getEvents();
-    expect(AppWrapper.state('events')).toEqual(allEvents);
+    let eventCount = AppWrapper.state('eventCount');
+    eventCount = Math.min(allEvents.length, eventCount);
+    const eventsByCount = allEvents.slice(0, eventCount);
+    expect(AppWrapper.state('events')).toEqual(eventsByCount);
     AppWrapper.unmount();
   })
+
+  test('App passes "eventCount" as a prop to NumberOfEvents', () => {
+    const AppWrapper = mount(<App />);
+    const AppLocationsState = AppWrapper.state('eventCount');
+    expect(AppLocationsState).not.toEqual(undefined);
+    expect(AppWrapper.find(NumberOfEvents).props().eventCount).toEqual(AppLocationsState);
+    AppWrapper.unmount();
+  });
 
 });

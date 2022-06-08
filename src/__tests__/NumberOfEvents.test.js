@@ -13,8 +13,8 @@ describe('<NumberOfEvents /> component', () => {
   });
 
   test('renders text input correctly', () => {
-    const number = NumberOfEventsWrapper.state('number');
-    expect(NumberOfEventsWrapper.find('.number').prop('value')).toBe(number);
+    const eventCount = NumberOfEventsWrapper.state('eventCount');
+    expect(NumberOfEventsWrapper.find('.number').prop('value')).toBe(eventCount);
   });
 
 });

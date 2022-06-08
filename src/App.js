@@ -9,42 +9,49 @@ import './nprogress.css';
 class App extends Component {
   state = {
     events: [],
-    locations: []
+    locations: [],
+    eventCount: parseInt('')
   }
 
-  updateEvents = (location) => {
+  updateEvents = (location, eventCount) => {
+    if (!eventCount || eventCount === undefined) {
+      eventCount = this.state.eventCount;
+    };
+    if (!location || location === undefined) {
+      location = 'all';
+    };
     getEvents().then((events) => {
-      const locationEvents = (location === 'all') ?
+      // filter event array by location
+      let locationEvents = (location === 'all') ?
       events : 
       events.filter((event) => event.location === location);
+      // set eventCount to the smaller of the locationEvents array length and specific eventCount
+      eventCount = Math.min(locationEvents.length, eventCount);
       this.setState({
-        events: locationEvents
+        events: locationEvents.slice(0, eventCount),
       });
     });
-  }
+  };
 
   componentDidMount() {
-    // this.mounted = true;
-    // getEvents().then((events) => {
-    //   if (this.mounted) {
-    //     this.setState({ events, locations: extractLocations(events) });
-    //   }
-    // });
+    this.mounted = true;
     getEvents().then((events) => {
-      this.setState({ events, locations: extractLocations(events) });
+      if (this.mounted) {
+        this.setState({ events, locations: extractLocations(events) });
+      }
     });
   }
 
-  // componentWillUnmount() {
-  //   this.mounted = false;
-  // }
+  componentWillUnmount() {
+    this.mounted = false;
+  }
  
   render() {
     return (
       <div className="App">
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
         <EventList events={this.state.events} />
-        <NumberOfEvents />
+        <NumberOfEvents eventCount={this.state.eventCount} updateEvents={this.updateEvents} />
       </div>
     );
   };
