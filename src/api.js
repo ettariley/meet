@@ -86,6 +86,7 @@ export const getAccessToken = async () => {
       );
       console.log(results);
       const { authUrl } = results.data;
+      console.log(authUrl);
       return (window.location.href = authUrl);
     }
     console.log("about to exit inside");
