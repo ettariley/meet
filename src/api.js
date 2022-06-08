@@ -1,3 +1,7 @@
+import { mockData } from "./mock-data";
+import axios from "axios";
+import NProgress from "nprogress";
+
 /**
  *
  * @param {*} events:
@@ -6,9 +10,7 @@
  * It will also remove all duplicates by creating another new array using the spread operator and spreading a Set.
  * The Set will remove all duplicates from the array.
  */
-import { mockData } from "./mock-data";
-import axios from "axios";
-import NProgress from "nprogress";
+
 
 export const getAccessToken = async () => {
   const accessToken = localStorage.getItem('access_token');
@@ -18,7 +20,7 @@ export const getAccessToken = async () => {
     await localStorage.removeItem("access_token");
     const searchParams = new URLSearchParams(window.location.search);
     const code = await searchParams.get("code");
-    if(!code) {
+    if (!code) {
       const results = await axios.get(
         "https://52c4nxu9zd.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url"
       );
@@ -28,6 +30,21 @@ export const getAccessToken = async () => {
     return code && getToken(code);
   }
   return accessToken;
+
+  // if (!accessToken || tokenCheck.error) {
+  //   await localStorage.removeItem("access_token");
+  //   const searchParams = new URLSearchParams(window.location.search);
+  //   const code = await searchParams.get("code");
+  //   if(!code) {
+  //     const results = await axios.get(
+  //       "https://52c4nxu9zd.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url"
+  //     );
+  //     const { authUrl } = results.data;
+  //     return (window.location.href = authUrl);
+  //   }
+  //   return code && getToken(code);
+  // }
+  // return accessToken;
 }
 
 const checkToken = async (accessToken) => {
@@ -40,12 +57,26 @@ const checkToken = async (accessToken) => {
   return result;
 }
 
+const removeQuery = () => {
+  if (window.history.pushState && window.location.pathname) {
+    var newurl = 
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname;
+    window.history.pushState("", "", newurl);
+  } else {
+    newurl = window.location.protocol + "//" + window.location.host;
+    window.history.pushState("", "", newurl);
+  }
+};
+
 export const getEvents = async () => {
   NProgress.start();
 
-  if (window.location.href.startsWith('http://localhost')) {
-  NProgress.done();  
-  return mockData;
+  if (window.location.href.startsWith("http://localhost")) {
+    NProgress.done();  
+    return mockData;
   }
 
   const token = await getAccessToken();
@@ -64,20 +95,6 @@ export const getEvents = async () => {
   }
 };
 
-const removeQuery = () => {
-  if (window.history.pushState && window.location.pathname) {
-    var newurl = 
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname;
-    window.history.pushState("", "", newurl);
-  } else {
-    newurl = window.location.protocol + "//" + window.location.host;
-    window.history.pushState("", "", newurl);
-  }
-};
-
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const { access_token } = await fetch(
@@ -93,7 +110,7 @@ const getToken = async (code) => {
   return access_token;
 };
 
- export const extractLocations = (events) => {
+export const extractLocations = (events) => {
   var extractLocations = events.map((event) => event.location);
   var locations = [...new Set(extractLocations)];
   return locations;
