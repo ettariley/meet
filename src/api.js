@@ -42,15 +42,16 @@ const checkToken = async (accessToken) => {
 
 export const getEvents = async () => {
   NProgress.start();
+  console.log("get events has been called");
 
   if (window.location.href.startsWith("http://localhost")) {
-    const mockEventData = mockData;
     NProgress.done();  
-    return mockEventData;
+    return mockData;
   }
 
   const token = await getAccessToken();
-
+  console.log(token);
+  
   if (token) {
     removeQuery();
     const url = `https://52c4nxu9zd.execute-api.us-east-1.amazonaws.com/dev/api/get-events/${token}`;
