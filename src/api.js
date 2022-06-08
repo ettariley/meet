@@ -51,7 +51,7 @@ export const getEvents = async () => {
 
   const token = await getAccessToken();
   console.log(token);
-  
+
   if (token) {
     removeQuery();
     const url = `https://52c4nxu9zd.execute-api.us-east-1.amazonaws.com/dev/api/get-events/${token}`;
@@ -69,8 +69,11 @@ export const getEvents = async () => {
 export const getAccessToken = async () => {
   const accessToken = localStorage.getItem('access_token');
   const tokenCheck = accessToken && (await checkToken(accessToken));
+  console.log(accessToken);
+  console.log(tokenCheck);
 
   if (!accessToken || tokenCheck.error) {
+    console.log("inside getAccessToken if statement");
     await localStorage.removeItem("access_token");
     const searchParams = new URLSearchParams(window.location.search);
     const code = await searchParams.get("code");
