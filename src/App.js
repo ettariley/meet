@@ -24,17 +24,20 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.mounted = true;
+    // this.mounted = true;
+    // getEvents().then((events) => {
+    //   if (this.mounted) {
+    //     this.setState({ events, locations: extractLocations(events) });
+    //   }
+    // });
     getEvents().then((events) => {
-      if (this.mounted) {
-        this.setState({ events, locations: extractLocations(events) });
-      }
+      this.setState({ events, locations: extractLocations(events) });
     });
   }
 
-  componentWillUnmount() {
-    this.mounted = false;
-  }
+  // componentWillUnmount() {
+  //   this.mounted = false;
+  // }
  
   render() {
     return (
