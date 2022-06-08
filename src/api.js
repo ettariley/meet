@@ -88,8 +88,10 @@ export const getAccessToken = async () => {
       const { authUrl } = results.data;
       return (window.location.href = authUrl);
     }
+    console.log("about to exit inside");
     return code && getToken(code);
   }
+  console.log("about to exit outside");
   return accessToken;
 }
 
