@@ -35,7 +35,9 @@ class App extends Component {
 
   componentDidMount() {
     this.mounted = true;
+    console.log("component mounted");
     getEvents().then((events) => {
+      console.log()
       if (this.mounted) {
         this.setState({ events, locations: extractLocations(events) });
       }
