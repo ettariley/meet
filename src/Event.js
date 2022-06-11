@@ -14,7 +14,7 @@ class Event extends Component {
   render() {
     const { event } = this.props;
 
-    return <div>
+    return <div className="event">
       <ul className="event-collapsed">
         <li className="event-title">{event.summary}</li>
         <li className="event-start-date-time">{event.start.dateTime}</li>
