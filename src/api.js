@@ -76,7 +76,10 @@ export const getAccessToken = async () => {
     console.log("inside getAccessToken if statement");
     await localStorage.removeItem("access_token");
     const searchParams = new URLSearchParams(window.location.search);
-    console.log(searchParams);
+    for (let item of searchParams) {
+      console.log('item: ', item)
+    };
+    // console.log(searchParams);
     const code = await searchParams.get('code');
     console.log(code);
     if (!code) {
