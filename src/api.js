@@ -77,12 +77,12 @@ export const getAccessToken = async () => {
     await localStorage.removeItem("access_token");
     const searchParams = new URLSearchParams(window.location.search);
     console.log(searchParams);
-    const code = await searchParams.get("code");
+    const code = await searchParams.get('code');
     console.log(code);
     if (!code) {
       console.log("inside second if statement");
       const results = await axios.get(
-        "https://52c4nxu9zd.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url"
+        'https://52c4nxu9zd.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url'
       );
       console.log(results);
       const { authUrl } = results.data;
@@ -94,7 +94,7 @@ export const getAccessToken = async () => {
   }
   console.log("about to exit outside");
   return accessToken;
-}
+};
 
 const getToken = async (code) => {
   try {
