@@ -13,6 +13,7 @@ class Event extends Component {
   
   render() {
     const { event } = this.props;
+    const { show } = this.state;
 
     return <div className="event">
       <ul className="event-collapsed">
@@ -29,7 +30,7 @@ class Event extends Component {
           <li className="event-link">{event.htmlLink}</li>
         </ul>
       }
-      <button type="button" className="show-hide-details" onClick={this.handleClick}>Show/Hide Details</button>
+      <button type="button" className="show-hide-details" onClick={this.handleClick}>{show ? 'Hide Details' : 'Show Details'}</button>
     </div>;
   }
 }

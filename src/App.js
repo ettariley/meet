@@ -10,7 +10,7 @@ class App extends Component {
   state = {
     events: [],
     locations: [],
-    eventCount: parseInt('')
+    eventCount: parseInt('32')
   }
 
   updateEvents = (location, eventCount) => {
@@ -28,6 +28,7 @@ class App extends Component {
       // set eventCount to the smaller of the locationEvents array length and specific eventCount
       eventCount = Math.min(locationEvents.length, eventCount);
       this.setState({
+        eventCount: eventCount,
         events: locationEvents.slice(0, eventCount),
       });
     });
