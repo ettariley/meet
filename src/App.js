@@ -10,7 +10,7 @@ class App extends Component {
   state = {
     events: [],
     locations: [],
-    eventCount: parseInt('32')
+    eventCount: 32
   }
 
   updateEvents = (location, eventCount) => {
