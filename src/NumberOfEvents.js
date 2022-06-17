@@ -4,12 +4,11 @@ import { ErrorAlert } from "./Alert";
 class NumberOfEvents extends Component {
 
   state = {
-    eventCount: 32
+    eventCount: 32,
   };
   
   handleNumberChanged = (event) => {
     const value = parseInt(event.target.value);
-    console.log(value);
     if (value < 1 || value > 32) {
       this.setState({
         errorText: 'Number of events must be between 1 and 32'
