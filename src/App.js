@@ -10,7 +10,7 @@ class App extends Component {
   state = {
     events: [],
     locations: [],
-    eventCount: parseInt('')
+    eventCount: null
   }
 
   updateEvents = (location, eventCount) => {
@@ -36,11 +36,13 @@ class App extends Component {
 
   componentDidMount() {
     this.mounted = true;
-    console.log("component mounted");
     getEvents().then((events) => {
-      console.log()
       if (this.mounted) {
-        this.setState({ events, locations: extractLocations(events) });
+        this.setState({ 
+          events,
+          locations: extractLocations(events), 
+          eventCount: Math.min(events.length, 32)
+        });
       }
     });
   }
@@ -53,8 +55,8 @@ class App extends Component {
     return (
       <div className="App">
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
-        <EventList events={this.state.events} />
         <NumberOfEvents eventCount={this.state.eventCount} updateEvents={this.updateEvents} />
+        <EventList events={this.state.events} />
       </div>
     );
   };

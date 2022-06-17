@@ -42,7 +42,6 @@ const checkToken = async (accessToken) => {
 
 export const getEvents = async () => {
   NProgress.start();
-  console.log("get events has been called");
 
   if (window.location.href.startsWith("http://localhost")) {
     NProgress.done();  
