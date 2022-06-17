@@ -37,11 +37,12 @@ class App extends Component {
   componentDidMount() {
     this.mounted = true;
     getEvents().then((events) => {
+      const eventCount = Math.min(events.length, 32);
       if (this.mounted) {
         this.setState({ 
-          events,
+          events: events.slice(0, eventCount),
           locations: extractLocations(events), 
-          eventCount: Math.min(events.length, 32)
+          eventCount: eventCount
         });
       }
     });
