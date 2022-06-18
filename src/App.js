@@ -51,7 +51,11 @@ class App extends Component {
     });
     if (!navigator.onLine) {
       this.setState({
-        offlineText: 'No internet connection. The list displayed is the last list you viewed.'
+        offlineText: 'No internet connection. Displaying previously viewed results.'
+      });
+    } else {
+      this.setState({
+        offlineText: ''
       });
     }
   }
