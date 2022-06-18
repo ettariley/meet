@@ -4,7 +4,7 @@ import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { extractLocations, getEvents } from './api';
-import { InfoAlert } from "./Alert";
+import { OfflineAlert } from "./Alert";
 import './nprogress.css';
 
 class App extends Component {
@@ -12,6 +12,7 @@ class App extends Component {
     events: [],
     locations: [],
     eventCount: null,
+    offlineText: ''
   }
 
   updateEvents = (location, eventCount) => {
@@ -48,6 +49,11 @@ class App extends Component {
         });
       }
     });
+    if (!navigator.onLine) {
+      this.setState({
+        offlineText: 'No internet connection. The list displayed is the last list you viewed.'
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -57,11 +63,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className='offline-warning'>
-          {!navigator.onLine ? (
-            <InfoAlert text="No internet connection. The list displayed is the last list you viewed." />
-          ) : ('')}
-        </div>
+        <OfflineAlert text={this.state.offlineText} />
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
         <NumberOfEvents eventCount={this.state.eventCount} updateEvents={this.updateEvents} />
         <EventList events={this.state.events} />
