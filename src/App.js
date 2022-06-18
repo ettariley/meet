@@ -36,19 +36,19 @@ class App extends Component {
     });
   };
 
-  // checkOnline() {
-  //   if (!navigator.onLine) {
-  //     return 'No internet connection. Displaying previously viewed results.'
-  //     // this.setState({
-  //     //   offlineText: 
-  //     // });
-  //   } else {
-  //     return ''
-  //     // this.setState({
-  //     //   offlineText: ''
-  //     // });
-  //   }
-  // };
+  checkOnline() {
+    if (!navigator.onLine) {
+      return 'No internet connection. Displaying previously viewed results.'
+      // this.setState({
+      //   offlineText: 
+      // });
+    } else {
+      return ''
+      // this.setState({
+      //   offlineText: ''
+      // });
+    }
+  };
 
   componentDidMount() {
     this.mounted = true;
@@ -73,11 +73,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className='offline-warning'>
-          {!navigator.onLine ? (
-            <OfflineAlert text={'No internet connection. Displaying last list viewed.'} />
-          ) : ('')}
-        </div>
+        <OfflineAlert text={this.state.offlineText} />
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
         <NumberOfEvents eventCount={this.state.eventCount} updateEvents={this.updateEvents} />
         <EventList events={this.state.events} />
