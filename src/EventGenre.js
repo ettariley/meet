@@ -20,7 +20,7 @@ const EventGenre = ({ events }) => {
   }, [events]);
 
   return (
-      <ResponsiveContainer height={400} className="recharts-responsive-container">
+      <ResponsiveContainer height={400}>
         <h4>Events by Topic</h4> 
         <PieChart width={400} height={400}>
           <Pie
