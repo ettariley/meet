@@ -4,24 +4,25 @@ import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 const EventGenre = ({ events }) => {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const getData = () => {
-      const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'AngularJS'];
-      const data = genres.map((genre) => {
-        const value = events.filter(({ summary }) => 
-          summary.split(' ').includes(genre)
-          ).length;
-        return { name: genre, value };
-      });
-      return data;
-    };
+  const getData = () => {
+    const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'AngularJS'];
+    const data = genres.map((genre) => {
+      const value = events.filter(({ summary }) => 
+        summary.split(' ').includes(genre)
+        ).length;
+      return { name: genre, value };
+    });
+    return data;
+  };
 
+  useEffect(() => {
     setData(() => getData());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [events]);
 
   return (
       <ResponsiveContainer height={400}>
-        <h4>Events by Topic</h4> 
+        {/* <h4>Events by Topic</h4>  */}
         <PieChart width={400} height={400}>
           <Pie
             data={data}
