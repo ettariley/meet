@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 
-const EventGenre = ({ events }) => {
+const EventGenre = ({ locations, events }) => {
   const [data, setData] = useState([]);
 
   const getData = () => {
@@ -18,7 +18,7 @@ const EventGenre = ({ events }) => {
   useEffect(() => {
     setData(() => getData());
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [events]);
+  }, [locations, events]);
 
   return (
       <ResponsiveContainer height={400}>
